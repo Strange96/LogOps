@@ -16,6 +16,7 @@ When LogOps is running, you can access it at `localhost:80` or `localhost:443`
 
 # Individual repositories
 The respective respositories and their pipelines are accessible at:
+
 Log-Agent: 
 * Github: `https://github.com/Jakan16/Log-Agent` 
 * Travis CI: `https://travis-ci.com/Jakan16/Log-Agent`
