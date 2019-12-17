@@ -7,6 +7,8 @@ In order to run LogOps, you must have Docker, Docker-Compose and Python installe
 To get the entire system, clone this repository along the submodules with:
 
  `git clone --recurse-submodules https://github.com/Strange96/LogOps`
+ 
+ # LogOps run instructions
 
 Running the script: `runLogOps.sh`, will start all the services.
 
