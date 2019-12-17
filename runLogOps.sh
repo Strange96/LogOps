@@ -15,6 +15,7 @@ cd Log-Auth && docker-compose up -d && cd ..
 cd Log-Website && docker-compose up -d && cd ..
 
 echo $'\nPress any to stop LogOps - but why would you? ;-)'
+read -n 1 -s
 
 cd Log-Website && docker-compose down && cd ..
 cd Log-Auth && docker-compose down && cd ..
