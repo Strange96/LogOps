@@ -1,0 +1,18 @@
+[submodule "log-alarm-service"]
+	path = log-alarm-service
+	url = https://github.com/Strange96/log-alarm-service
+[submodule "Log-Store"]
+	path = Log-Store
+	url = https://github.com/Jakan16/Log-Store
+[submodule "Log-Agent"]
+	path = Log-Agent
+	url = https://github.com/Jakan16/Log-Agent
+[submodule "Log-Auth"]
+	path = Log-Auth
+	url = https://github.com/Jakan16/Log-Auth
+[submodule "Log-Jolie-Cloud"]
+	path = Log-Jolie-Cloud
+	url = https://github.com/Jakan16/Log-Jolie-Cloud
+[submodule "Log-Website"]
+	path = Log-Website
+	url = https://github.com/Jakan16/Log-Website
