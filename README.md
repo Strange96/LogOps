@@ -17,7 +17,9 @@ Running the script: `runLogOps.sh`, will start all the services.
 
 Once started and running in the terminal, press any key in that terminal to stop it.
 
-When LogOps is running, you can access it at `localhost:80` or `localhost:443`
+When LogOps is running, you can access and use it through the website at `localhost:80`
+
+For specfic usage of the individual services, please refer to the individual repositories
 
 # Individual repositories
 The respective respositories and their pipelines are accessible at:
