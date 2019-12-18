@@ -2,13 +2,16 @@
 Parent repository for LogOps, containing links to the repositories that contain the services which make up LogOps
 
 # Setup requirements
-In order to run LogOps, you must have Docker, Docker-Compose and Python installed.
+In order to run LogOps, you must have: 
+* Docker
+* docker-compose in a version compatible with version 3.7 files. E.g. version 1.25.0.
+* python3 
 
 To get the entire system, clone this repository along the submodules with:
 
  `git clone --recurse-submodules https://github.com/Strange96/LogOps`
  
- # LogOps run instructions
+# LogOps run instructions
 
 Running the script: `runLogOps.sh`, will start all the services.
 
