@@ -8,7 +8,7 @@ cd log-alarm-service && docker-compose up -d mongo && cd ..
 cd Log-Store && docker-compose up -d logstore && cd ..
 cd log-alarm-service && docker-compose up -d alarmservice && cd ..
 cd Log-Jolie-Cloud && docker-compose up -d && cd ..
-cd Log-Agent && python Server.py & && cd Files && python Agent.py & && cd ../..
+cd Log-Agent && bash -c 'python3 Server.py &' > /dev/null && cd Files && bash -c 'python3 Agent.py & > /dev/null' > /dev/null && cd ../..
 cd Log-Auth && docker-compose up -d && cd ..
 
 # START WEBSITE
