@@ -11,6 +11,12 @@ cd Log-Jolie-Cloud && docker-compose up -d && cd ..
 cd Log-Agent && bash -c 'python3 Server.py &' > /dev/null && cd Files && bash -c 'python3 Agent.py & > /dev/null' > /dev/null && cd ../..
 cd Log-Auth && docker-compose up -d && cd ..
 
+# EXPORT IPS OF SERVICES
+LOGSTORE_URL=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' logstore)
+ALARMSERVICE_URL=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' alarmservice)
+JOLIECLOUD_URL=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' parsermanager)
+AUTHSERVICE_URL=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' authservice)
+
 # START WEBSITE
 cd Log-Website && docker-compose up -d && cd ..
 
