@@ -4,7 +4,7 @@
 docker network create l_o_net
 
 # BUILD PACKAGES FOR JOLIE CLOUD
-JOLIE_PATH=$(locate jolie.jar | grep "^/usr.*/jolie.jar") && JOLIE_VERSION=$(jolie --version 2>&1 | sed -e 's/Jolie //g' | sed -e 's/ (C).*//g')
+JOLIE_PATH=$(locate jolie.jar | grep "^/usr.*/jolie.jar") && JOLIE_VERSION=$(jolie --version 2>&1 | sed 's/\(Jolie \)\([0-9]*\.[0-9]*\.[0-9]*\)\(.*\)/\2/g')
 mvn install:install-file -Dfile=$JOLIE_PATH -DgroupId=jolie -DartifactId=jolie -Dversion=$JOLIE_VERSION -Dpackaging=jar
 cd Log-Jolie-Cloud/ParserDeploy && mvn package && cd ../java/mongo4jolie && mvn package && cd ../../..
 
