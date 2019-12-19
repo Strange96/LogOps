@@ -3,28 +3,33 @@
 # CREATE SHARED NETWORK
 docker network create l_o_net
 
-# START BY INITIALIZING DBs
+# BUILD PACKAGES FOR JOLIE CLOUD
+JOLIE_PATH=$(locate jolie.jar | grep "^/usr.*/jolie.jar") && JOLIE_VERSION=$(jolie --version 2>&1 | sed -e 's/Jolie //g' | sed -e 's/ (C).*//g')
+mvn install:install-file -Dfile=$JOLIE_PATH -DgroupId=jolie -DartifactId=jolie -Dversion=$JOLIE_VERSION -Dpackaging=jar
+cd Log-Jolie-Cloud/ParserDeploy && mvn package && cd ../java/mongo4jolie && mvn package && cd ../../..
+
+# INITIALIZE A COUPLE OF DBs
 cd Log-Store && docker-compose up -d esdb && cd ..
 cd log-alarm-service && docker-compose up -d mongo && cd ..
 
 # START LOG-STORE, ALARM-SERVICE, JOLIE-CLOUD, AGENT-SERVICE AND SUBSCRIPTION-SERVICE
 cd Log-Store && docker-compose up -d logstore && cd ..
 cd log-alarm-service && docker-compose up -d alarmservice && cd ..
-#cd Log-Jolie-Cloud && docker-compose up -d && cd ..
-#cd Log-Agent && bash -c 'python3 Server.py &' > /dev/null && cd Files && bash -c 'python3 Agent.py company42 license42 & > /dev/null' > /dev/null && cd ../..
+cd Log-Jolie-Cloud && docker-compose up -d && cd ..
+cd Log-Agent && bash -c 'python3 Server.py &' > /dev/null && cd Files && bash -c 'python3 Agent.py company42 license42 & > /dev/null' > /dev/null && cd ../..
 #cd Log-Auth && docker-compose up -d && cd ..
 
 # CONNECT SERVICES TO SHARED NETWORK
 docker network connect l_o_net logstore
 docker network connect l_o_net alarmservice
-#docker network connect l_o_net parsermanager
+docker network connect l_o_net parsermanager
 #docker network connect l_o_net authservice
 
 # EXPORT IPS OF SERVICES
-export GLOBAL_URL=localhost
-export LOGSTORE_URL=logstore:8080
-export ALARMSERVICE_URL=alarmservice:8085
-#export JOLIECLOUD_URL=parsermanager:8001
+export GLOBAL_URL=http://localhost
+export LOGSTORE_URL=http://localhost:8079
+export ALARMSERVICE_URL=http://localhost:8085
+export JOLIECLOUD_URL=http://localhost:8001
 #export AUTHSERVICE_URL=authservice:7900
 
 #LOGSTORE_URL=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' logstore)
@@ -40,14 +45,14 @@ read -n 1 -s
 
 cd Log-Website && docker-compose down && cd ..
 #cd Log-Auth && docker-compose down && cd ..
-#kill -9 $(ps aux | grep Server.py | awk {'print $2'} | head -1)
-#kill -9 $(ps aux | grep Agent.py | awk {'print $2'} | head -1)
-#cd Log-Jolie-Cloud && docker-compose down && cd ..
+kill -9 $(ps aux | grep Server.py | awk {'print $2'} | head -1)
+kill -9 $(ps aux | grep Agent.py | awk {'print $2'} | head -1)
+cd Log-Jolie-Cloud && docker-compose down && cd ..
 cd log-alarm-service && docker-compose down && cd ..
 cd Log-Store && docker-compose down && cd ..
 
 #unset AUTHSERVICE_URL
-#unset JOLIECLOUD_URL
+unset JOLIECLOUD_URL
 unset ALARMSERVICE_URL
 unset LOGSTORE_URL
 unset GLOBAL_URL

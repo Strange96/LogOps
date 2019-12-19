@@ -2,10 +2,12 @@
 Parent repository for LogOps, containing links to the repositories that contain the services which make up LogOps
 
 # Setup requirements
-In order to run LogOps, you must have: 
+In order to run LogOps, you must have the following installed: 
 * Docker
 * docker-compose in a version compatible with version 3.7 files. E.g. version 1.25.0.
-* python3 
+* python3
+* mvn (maven)
+* jolie - installed in the /usr directory, e.g. /usr/lib/jolie
 
 To get the entire system, clone this repository along the submodules with:
 
