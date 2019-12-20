@@ -9,7 +9,7 @@ To get the entire system, clone this repository along the submodules with:
  `git clone --recurse-submodules https://github.com/Strange96/LogOps`
  
 # Setup
-To apply the Kubernetes files in the following order:
+To get LogOps running, apply the Kubernetes files in the kubernetes directory in the following order:
 
 // TODO
 
