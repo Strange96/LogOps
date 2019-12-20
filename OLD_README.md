@@ -2,25 +2,24 @@
 Parent repository for LogOps, containing links to the repositories that contain the services which make up LogOps
 
 # Setup requirements
-Setting up the system requires a Kubernetes solution supporting LoadBalancers - e.g. Amazon EKS
+In order to run LogOps, you must have the following installed: 
+* Docker
+* docker-compose in a version compatible with version 3.7 files. E.g. version 1.25.0.
+* python3
+* mvn (maven)
+* jolie - installed in the /usr directory, e.g. /usr/lib/jolie
 
 To get the entire system, clone this repository along the submodules with:
 
  `git clone --recurse-submodules https://github.com/Strange96/LogOps`
  
-# Setup
-To apply the Kubernetes files in the following order:
+# LogOps run instructions
 
-// TODO
+Running the script: `runLogOps.sh`, will start all the services.
 
-The following variables have to be set:
+Once started and running in the terminal, press any key in that terminal to stop it.
 
-// TODO
-
-# LogOps instructions
-When the solution is up and running, LogOps can be used in the following way:
-
-// TODO
+When LogOps is running, you can access and use it through the website at `localhost:80`
 
 For specfic usage of the individual services, please refer to the individual repositories
 
@@ -50,4 +49,3 @@ Log-Store:
 Log-Website: 
 * Github: `https://github.com/Jakan16/Log-Website` 
 * Travis CI: `https://travis-ci.com/Jakan16/Log-Website`
-
