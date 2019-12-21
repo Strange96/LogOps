@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# OUT OF OLD DIRECTORY
+cd ..
+
 # CREATE SHARED NETWORK
 docker network create l_o_net
 
