@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-auth-deployment
+  labels:
+    app: log-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-auth
+  template:
+    metadata:
+      labels:
+        app: log-auth
+    spec:
+      containers:
+      - name: log-auth
+        image: logops/subscription:1.0.2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        env:
+        - name: MYSQL_HOST
+          value: log-auth-db-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-store-deployment
+  labels:
+    app: log-store
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-store
+  template:
+    metadata:
+      labels:
+        app: log-store
+    spec:
+      containers:
+      - name: log-store
+        image: logops/log-store:1.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ELASTIC_HOST
+          value: http://log-store-esdb-service:9200

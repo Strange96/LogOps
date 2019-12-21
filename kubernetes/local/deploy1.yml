@@ -1,0 +1,279 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alarm-app-deployment
+  labels:
+    app: alarm-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alarm-app
+  template:
+    metadata:
+      labels:
+        app: alarm-app
+    spec:
+      containers:
+      - name: alarm-app
+        image: logops/alarm-service:1.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8085
+        env:
+        - name: MONGO_HOST
+          value: alarm-db-service
+        - name: MONGO_PORT
+          value: "27017"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alarm-db-deployment
+  labels:
+    app: alarm-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alarm-db
+  template:
+    metadata:
+      labels:
+        app: alarm-db
+    spec:
+      containers:
+      - name: alarm-db
+        image: mongo
+        ports:
+        - containerPort: 27017
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parsermanager-deployment
+  labels:
+    app: parsermanager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: parsermanager
+  template:
+    metadata:
+      labels:
+        app: parsermanager
+    spec:
+      containers:
+      - name: parsermanager
+        image: porygom/parsermanager:develop
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8001
+        env:
+        - name: MONGODB_HOST
+          value: mongodb://mongo-service
+        - name: BUILDER_HOST
+          value: builder-service:8005
+        - name: AUTHENTICATOR_HOST
+          value: localhost:30077
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-db-deployment
+  labels:
+    app: mongo_db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo_db
+  template:
+    metadata:
+      labels:
+        app: mongo_db
+    spec:
+      containers:
+      - name: mongo-db
+        image: mongo
+        ports:
+        - containerPort: 27017
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-auth-db-deployment
+  labels:
+    app: log-auth-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-auth-db
+  template:
+    metadata:
+      labels:
+        app: log-auth-db
+    spec:
+      containers:
+      - name: log-auth-db
+        image: logops/subscriptiondb:1.0.1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3306
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-store-esdb-deployment
+  labels:
+    app: log-store-esdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-store-esdb
+  template:
+    metadata:
+      labels:
+        app: log-store-esdb
+    spec:
+      containers:
+      - name: log-store-esdb
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.4.2
+        ports:
+        - containerPort: 9200
+        env:
+        - name: "discovery.type"
+          value: "single-node"
+        - name: "cluster.name"
+          value: "log-store-esdb"
+        - name: "ES_JAVA_OPTS"
+          value: "-Xms512m -Xmx512m"
+        - name: "http.cors.enabled"
+          value: "true"
+        - name: "xpack.security.enabled"
+          value: "false"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: website-deployment
+  labels:
+    app: website-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: website-app
+  template:
+    metadata:
+      labels:
+        app: website-app
+    spec:
+      containers:
+      - name: apache
+        image: logops/logops_apache:develop
+        imagePullPolicy: Always
+        env:
+        - name: php_ADDR
+          value: localhost
+        ports:
+        - containerPort: 80
+          name: http
+        - containerPort: 443
+          name: https
+      - name: php
+        image: logops/logops_php:develop
+        imagePullPolicy: Always
+        env:
+        - name: GLOBAL_URL
+          value: http://127.0.0.1:30077
+        - name: LOGSTORE_URL
+          value: http://127.0.0.1:30077
+        - name: ALARMSERVICE_URL
+          value: http://127.0.0.1:30077
+        - name: JOLIECLOUD_URL
+          value: http://127.0.0.1:30077
+        - name: AUTHSERVICE_URL
+          value: http://127.0.0.1:30077/auth
+        - name: MYSQL_ADDR
+          value: 127.0.0.1
+      - name: mysql
+        image: logops/logops_mysql:develop
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3306
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reverse-proxy-deployment
+  labels:
+    app: reverse-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reverse-proxy
+  template:
+    metadata:
+      labels:
+        app: reverse-proxy
+    spec:
+      containers:
+      - name: reverse-proxy-nginx
+        image: logops/logops_nginx:develop
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: http
+        - containerPort: 443
+          name: https
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-gateway
+  labels:
+    app: example-gateway
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: example-gateway
+  template:
+    metadata:
+      labels:
+        app: example-gateway
+    spec:
+      containers:
+      - name: parser-gateway
+        image: porygom/parsermanager:develop
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 7999
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-parser
+  labels:
+    app: example-parser
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: example-parser
+  template:
+    metadata:
+      labels:
+        app: example-parser
+    spec:
+      containers:
+      - name: parser-implementation
+        image: porygom/example_parser:develop
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 27521
