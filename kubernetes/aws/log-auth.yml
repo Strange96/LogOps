@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: log-auth-service
+spec:
+  selector:
+    app: log-auth
+  ports:
+    - protocol: TCP
+      port: 7900
+      targetPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-auth-deployment
+  labels:
+    app: log-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-auth
+  template:
+    metadata:
+      labels:
+        app: log-auth
+    spec:
+      containers:
+      - name: log-auth
+        image: logops/subscription:1.0.2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        env:
+        - name: MYSQL_HOST
+          value: log-auth-db-service
