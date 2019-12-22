@@ -30,7 +30,10 @@ To run LogOps on a local cluter, do the following with the files in the kubernet
 3. run `kubectl apply -f deploy_auth.yml`
 4. run `kubectl apply -f services.yml`
 
-Locally, the website will be available at `localhost:30077`. If using Kind (Kubernetes in Docker), create the cluster with the config in kubernetes/local/kind_config directory. E.g. from the kubernetes/local directory, run: `kind create cluster --config kind_config/port_forwarder.yml` 
+Locally, the website will be available at `localhost:30077`. 
+
+If using Kind (Kubernetes in Docker), create the cluster with the config `port_forwarder.yml` in kubernetes/local/kind_config directory. E.g. from the kubernetes/local directory, run: 
+* `kind create cluster --config kind_config/port_forwarder.yml` 
 
 To interact directly with the individual services, send requests to:
 * `ROOT` for the website
@@ -66,7 +69,7 @@ E.g. if running locally and the company id/license is 'abcd-1234', the agent lic
 
 `python3 Agent.py abcd-1234 xyz-42 http://localhost:30077/auth http://localhost:30077/getParserHost mycode`
 
-LogOps starts a new machine for a new parser/new code. As this is not possible locally, the local solution overwrites your code with a default log parser. This reads the content of the files in Log-Agent/Files directory and saves it as logs. If a file starts with the text 'alert', the default log parser will raise through the alarm-service.
+LogOps starts a new machine for a new parser/new code. As this is not possible locally, the local solution overwrites your code with a default log parser. This reads the content of the files in Log-Agent/Files directory and saves it as logs. If a file starts with the text 'alert:alert-name:severity-name' (replacing alert-name and severity-name with your own choice), the default log parser will raise the alarm through the alarm-service. 
 
 The logs that are created and the alarms which are raised by parsing the logs, which are sent by the Agent, can be found on the website under the `Log management and Alarm management` menus.
 
