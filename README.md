@@ -25,8 +25,8 @@ To get LogOps running on AWS, apply the Kubernetes files in the kubernetes/aws d
 
 To run LogOps on a local cluter, do the following with the files in the kubernetes/local directory:
 
-1. run `kubectl apply -f deploy1.yml` and wait 10 seconds
-2. run `kubectl apply -f deploy2.yml` and wait 10 seconds
+1. run `kubectl apply -f deploy1.yml` and wait 30 seconds 
+2. run `kubectl apply -f deploy2.yml` and wait 30 seconds
 3. run `kubectl apply -f deploy_auth.yml`
 4. run `kubectl apply -f services.yml`
 
@@ -52,14 +52,16 @@ Navigate to the login page in the upper-right corner. You can log in as an admin
 * sandsized_admin 
 * password: admin
 
-Navigate to admin control using the menu in the upper-right corner. Here a new company may be added under `Add company`. Copy an id from the company list, and logout. Navigate to the login page and create a new user using the copied id. You can now login using the new account.
+Navigate to admin control using the menu in the upper-right corner. Here a new company may be added under 'Add company'. Below under 'companies', save the company license of the company you created (to the right of the company name), and logout via the menu in the upper-right corner. Navigate to the login page again and create a new user using the company license. You can now login using the new account and open your dashboard via the menu in the upper-right corner.
 
 THE FOLLOWING ONLY APPLIES IF RUNNING ON AWS:
 
-Go to `Code management` and click create code. Enter a name and some code, example: [Example Parser Code](https://github.com/Jakan16/Log-Jolie-Cloud/blob/master/builder/test/example_jolie_parser.ol). 
+Go to 'Code management' and click create code. Enter a name and some code, example: [Example Parser Code](https://github.com/Jakan16/Log-Jolie-Cloud/blob/master/builder/test/example_jolie_parser.ol). 
 Known issue: The builder service is only authorized to access the kubernetes service for 15 min at a time, and must be restated after this time span. This can be done with `kubectl delete pods -l app=builder`. The deployment will automatically start the new pods.
 
-Navigate to Subscription in the left menu. Enter an agent name and click create. Open a terminal and go to the Log-Agent/Files directory. Run the following command:
+If you're running LogOps locally, instead of the above which only applies to AWS, go to the 'Code management' menu on the left, click create code and provide a name. Locally, no code needs to supplied - this is explanied later on.
+
+Navigate to Subscription in the left menu. Enter an agent name, click create and save the agent license key. Open a terminal and go to the Log-Agent/Files directory. Run the following command:
 
 `python3 Agent.py [Company id used to create user] [agent license key] http://[url of load balancer]/auth http://[url of load balancer]/getParserHost [name of log parser]`
 
@@ -71,7 +73,9 @@ E.g. if running locally and the company id/license is 'abcd-1234', the agent lic
 
 LogOps starts a new machine for a new parser/new code. As this is not possible locally, the local solution overwrites your code with a default log parser. This reads the content of the files in Log-Agent/Files directory and saves it as logs. If a file contains the text `alert:alert-name:severity-name` (replacing alert-name and severity-name with your own choice), the default log parser will raise the alarm through the alarm-service. 
 
-The logs that are created and the alarms which are raised by parsing the logs, which are sent by the Agent, can be found on the website under the `Log management and Alarm management` menus.
+The logs that are created and the alarms which are raised by parsing the logs, which are sent by the Agent, can be found on the website under the `Log management and Alarm management` menus. 
+* Click on the magnifying glass at right of an alarm to see which logs raised that alarm.
+* Click on 'open log' at the right of a log to get the content of the log displayed.
 
 For more specfic usage of the individual services, please refer to the individual repositories
 
