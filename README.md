@@ -60,13 +60,13 @@ Navigate to Subscription in the left menu. Enter an agent name and click create.
 
 `python3 Agent.py [Company id used to create user] [agent license key] http://[url of load balancer]/auth http://[url of load balancer]/getParserHost [name of log parser]`
 
-`Name of log parser` is a name that you used for creating code.
+`Name of log parser` is a name that you used for creating code. The command will start the Agent which will send the content of the files in the current working directory (that is Log-Agent/Files) to the log parser.
 
 E.g. if running locally and the company id/license is 'abcd-1234', the agent license is 'xyz-42' and you named your code 'mycode', run:
 
 `python3 Agent.py abcd-1234 xyz-42 http://localhost:30077/auth http://localhost:30077/getParserHost mycode`
 
-The command will start the Agent which will send the content of the files in the current working directory (that is Log-Agent/Files).
+LogOps starts a new machine for a new parser/new code. As this is not possible locally, the local solution overwrites your code with a default log parser. This reads the content of the files in Log-Agent/Files directory and saves it as logs. If a file starts with the text 'alert', the default log parser will raise through the alarm-service.
 
 The logs that are created and the alarms which are raised by parsing the logs, which are sent by the Agent, can be found on the website under the `Log management and Alarm management` menus.
 
