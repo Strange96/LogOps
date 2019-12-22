@@ -30,7 +30,7 @@ To run LogOps on a local cluster, do the following with the files in the kuberne
 3. run `kubectl apply -f deploy_auth.yml`
 4. run `kubectl apply -f services.yml`
 
-Locally, the website will be available at `localhost:30077`. 
+When all deployments are ready, locally, the website will be available at `localhost:30077`. Run `kubectl get deployments` to see if the deployments are ready.
 
 If using Kubernetes in Docker, create the cluster with the config `port_forwarder.yml` in kubernetes/local/kind_config directory. E.g. from the kubernetes/local directory, run: 
 * `kind create cluster --config kind_config/port_forwarder.yml` 
@@ -57,7 +57,7 @@ Navigate to admin control using the menu in the upper-right corner. Here a new c
 If running on AWS, go to 'Code management' and click create code. Enter a name and some code, example: [Example Parser Code](https://github.com/Jakan16/Log-Jolie-Cloud/blob/master/builder/test/example_jolie_parser.ol). 
 Known issue: The builder service is only authorized to access the kubernetes service for 15 min at a time, and must be restated after this time span. This can be done with `kubectl delete pods -l app=builder`. The deployment will automatically start the new pods.
 
-If you're running LogOps locally, instead of the above which only applies to AWS, go to the 'Code management' menu on the left, click create code, provide a name and press create. Locally, no code needs to supplied - this is explanied later on.
+If you're running LogOps locally, instead of the above which only applies to AWS, go to the 'Code management' menu on the left, click create code, provide a name and press Save. Locally, no code needs to supplied - this is explanied later on.
 
 Navigate to Subscription in the left menu. Enter an agent name, click create and save the agent license key. Open a terminal and go to the Log-Agent/Files directory. Run the following command:
 
