@@ -69,7 +69,7 @@ E.g. if running locally and the company id/license is 'abcd-1234', the agent lic
 
 `python3 Agent.py abcd-1234 xyz-42 http://localhost:30077/auth http://localhost:30077/getParserHost mycode`
 
-LogOps starts a new machine for a new parser/new code. As this is not possible locally, the local solution overwrites your code with a default log parser. This reads the content of the files in Log-Agent/Files directory and saves it as logs. If a file starts with the text 'alert:alert-name:severity-name' (replacing alert-name and severity-name with your own choice), the default log parser will raise the alarm through the alarm-service. 
+LogOps starts a new machine for a new parser/new code. As this is not possible locally, the local solution overwrites your code with a default log parser. This reads the content of the files in Log-Agent/Files directory and saves it as logs. If a file contains the text `alert:alert-name:severity-name` (replacing alert-name and severity-name with your own choice), the default log parser will raise the alarm through the alarm-service. 
 
 The logs that are created and the alarms which are raised by parsing the logs, which are sent by the Agent, can be found on the website under the `Log management and Alarm management` menus.
 
