@@ -76,7 +76,7 @@ spec:
         - name: BUILDER_HOST
           value: builder-service:8005
         - name: AUTHENTICATOR_HOST
-          value: localhost:30077
+          value: 192.168.1.10:30077
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -189,15 +189,15 @@ spec:
         imagePullPolicy: Always
         env:
         - name: GLOBAL_URL
-          value: http://127.0.0.1:30077
+          value: http://192.168.1.10:30077
         - name: LOGSTORE_URL
-          value: http://127.0.0.1:30077
+          value: http://192.168.1.10:30077
         - name: ALARMSERVICE_URL
-          value: http://127.0.0.1:30077
+          value: http://192.168.1.10:30077
         - name: JOLIECLOUD_URL
-          value: http://127.0.0.1:30077
+          value: http://192.168.1.10:30077
         - name: AUTHSERVICE_URL
-          value: http://127.0.0.1:30077/auth
+          value: http://192.168.1.10:30077/auth
         - name: MYSQL_ADDR
           value: 127.0.0.1
       - name: mysql
@@ -235,45 +235,39 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: example-gateway
+  name: builder-deployment
   labels:
-    app: example-gateway
+    app: builder
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: example-gateway
+      app: builder
   template:
     metadata:
       labels:
-        app: example-gateway
+        app: builder
     spec:
       containers:
-      - name: parser-gateway
-        image: porygom/parsermanager:develop
+      - name: builder
+        image: porygom/builder_example:develop
         imagePullPolicy: Always
         ports:
-        - containerPort: 7999
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: example-parser
-  labels:
-    app: example-parser
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: example-parser
-  template:
-    metadata:
-      labels:
-        app: example-parser
-    spec:
-      containers:
-      - name: parser-implementation
-        image: porygom/example_parser:develop
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 27521
+        - containerPort: 8005
+        - containerPort: 8006
+        env:
+        - name: MONGODB_HOST
+          value: mongodb://mongo-service
+        - name: ALARMSERVICE_HOST
+          value: alarm-service:8085
+        - name: LOGSTORE_HOST
+          value: log-store-service:8080
+        - name: AUTHENTICATOR_HOST
+          value: 192.168.1.10:30077
+        volumeMounts:
+        - mountPath: /var/run/docker.sock
+          name: dockersock
+      volumes:
+      - name: dockersock
+        hostPath:
+          path: /var/run/docker.sock
