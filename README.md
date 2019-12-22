@@ -32,7 +32,7 @@ To run LogOps on a local cluster, do the following with the files in the kuberne
 
 When all deployments are ready, locally, the website will be available at `localhost:30077`. Run `kubectl get deployments` to see if the deployments are ready.
 
-If using Kubernetes in Docker, create the cluster with the config `port-forwarder.yml` in kubernetes/local/kind_config directory. E.g. from the kubernetes/local directory, run: 
+If using Kubernetes in Docker, create the cluster with the config `port-forwarder.yml` in the kubernetes/local/kind_config directory. E.g. from the kubernetes/local directory, run: 
 * `kind create cluster --config kind_config/port-forwarder.yml`.
 
 If you're doing a remote setup of the local cluster, replace each occurrence of 'localhost' in deploy1.yml (in the kubernetes/local/ directory) with the remote ip.  
