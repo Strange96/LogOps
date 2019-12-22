@@ -2,7 +2,7 @@
 Parent repository for LogOps, containing links to the repositories that contain the services which make up LogOps
 
 # Setup requirements
-Setting up the system requires a Kubernetes solution either supporting LoadBalancers (e.g. Amazon EKS), or a local Kubernetes setup 
+Setting up the system requires a Kubernetes solution either supporting LoadBalancers (e.g. Amazon EKS), or a local Kubernetes setup (e.g. Kind (Kubernetes in Docker) https://github.com/kubernetes-sigs/kind)
 
 To get the code of the entire system, clone this repository along the submodules with:
 
