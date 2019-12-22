@@ -49,7 +49,7 @@ Where ROOT refers to your AWS URL or, for a local cluster, localhost
 When the solution is up and running, LogOps can be used in the following way:
 
 Navigate to the login page in the upper-right corner. You can log in as an admin with the following credentials: 
-* sandsized_admin 
+* username: sandsized_admin 
 * password: admin
 
 Navigate to admin control using the menu in the upper-right corner. Here a new company may be added under 'Add company'. Below under 'companies', save the company license of the company you created (to the right of the company name), and logout via the menu in the upper-right corner. Navigate to the login page again and create a new user using the company license. You can now login using the new account and open your dashboard via the menu in the upper-right corner.
