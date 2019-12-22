@@ -2,14 +2,14 @@
 Parent repository for LogOps, containing links to the repositories that contain the services which make up LogOps
 
 # Setup requirements
-Setting up the system requires a Kubernetes solution supporting LoadBalancers - e.g. Amazon EKS
+Setting up the system requires a Kubernetes solution either supporting LoadBalancers (e.g. Amazon EKS), or a local Kubernetes setup 
 
-To get the entire system, clone this repository along the submodules with:
+To get the code of the entire system, clone this repository along the submodules with:
 
  `git clone --recurse-submodules https://github.com/Strange96/LogOps`
 
 # Setup
-To get LogOps running on aws, apply the Kubernetes files in the kubernetes/aws directory with these instructions:
+To get LogOps running on AWS, apply the Kubernetes files in the kubernetes/aws directory with these instructions:
 
 1. Create an AWS ECR repository, and set PARSER_REPO in jolie-cloud.yml
 2. Create an AWS EKS cluster with the name `LogOpsCluster` and add worker nodes to it
@@ -23,30 +23,49 @@ To get LogOps running on aws, apply the Kubernetes files in the kubernetes/aws d
 10. Wait 10 seconds
 11. Use the url from step 2, and navigate your browser to it.
 
+To run LogOps on a local cluter, do the following with the files in the kubernetes/local directory:
+
+1. run `kubectl apply -f deploy1.yml` and wait 10 seconds
+2. run `kubectl apply -f deploy2.yml` and wait 10 seconds
+3. run `kubectl apply -f services.yml`
+
+Locally, the website will be available at `localhost:30077`. If using Kind (Kubernetes in Docker), the command `sudo kubectl port-forward svc/reverse-proxy-service 30077:8092` will have to be run.
+
+To interact directly with the individual services, send requests to:
+* `ROOT` for the website
+* `ROOT/gateway` for the log-store
+* `ROOT/alarms` for the alarm-service
+* `ROOT/auth` for the authentication/subscription-service
+* `ROOT/getParserHost` for the builder
+* `ROOT/submitCode`, `ROOT/retrieveCode`, `ROOT/deleteCode` for the parser
+
+Where ROOT refers to your AWS URL or, for a local cluster, localhost
+
 # LogOps instructions
 When the solution is up and running, LogOps can be used in the following way:
 
-Navigate to the login page in the upper-right corner.
-You can log in as an admin with username: sandsized_admin and password: admin
-Navigate admin control using the upper-right corner menu.
-Here a new company may be added, under `Add company`.
-Copy an id from the company list, and logout.
-Navigate to the login page and create a new user using the id.
-You can now login using the new account.
+Navigate to the login page in the upper-right corner. You can log in as an admin with the following credentials: 
+* sandsized_admin 
+* password: admin
 
-This part only works if running on AWS
-Go to `Code management` and click create code. Enter a name, and some code, example: [Example Parser Code](https://github.com/Jakan16/Log-Jolie-Cloud/blob/master/builder/test/example_jolie_parser.ol)
-Known issue: The builder service is only authorized to access the kubernetes service for 15 min at a time, and must be restated after this time span. This can be done with `kubectl delete pods -l app=builder`
+Navigate to admin control using the menu in the upper-right corner. Here a new company may be added under `Add company`. Copy an id from the company list, and logout. Navigate to the login page and create a new user using the copied id. You can now login using the new account.
 
-Navigate to Subscription in the left menu.
-Enter an agent name and click create.
-Navigate a terminal to the Log-Agent/Files directory, and run the command
+THIS PART ONLY WORKS IF RUNNING ON AWS:
+
+Go to `Code management` and click create code. Enter a name and some code, example: [Example Parser Code](https://github.com/Jakan16/Log-Jolie-Cloud/blob/master/builder/test/example_jolie_parser.ol). 
+Known issue: The builder service is only authorized to access the kubernetes service for 15 min at a time, and must be restated after this time span. This can be done with `kubectl delete pods -l app=builder`. The deployment will automatically start the new pods.
+
+Navigate to Subscription in the left menu. Enter an agent name and click create. Open a terminal and go to the Log-Agent/Files directory. Run the following command:
 
 `python3 Agent.py [Company id used to create user] [agent license key] http://[url of load balancer]/auth http://[url of load balancer]/getParserHost [name of log parser]`
 
-This will send the content of the files in the current working directory. Which can be found in `Log and Alarm management` found in the menu.
+`Name of log parser` is a name that you used for creating code.
 
-For specfic usage of the individual services, please refer to the individual repositories
+The command will start the Agent which will send the content of the files in the current working directory (that is Log-Agent/Files). 
+
+The logs that are created and the alarms which are raised by parsing the logs, which are sent by the Agent, can be found on the website under the `Log management and Alarm management` menus.
+
+For more specfic usage of the individual services, please refer to the individual repositories
 
 # Individual repositories
 The respective respositories and their pipelines are accessible at:
