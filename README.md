@@ -50,7 +50,7 @@ Navigate to the login page in the upper-right corner. You can log in as an admin
 
 Navigate to admin control using the menu in the upper-right corner. Here a new company may be added under `Add company`. Copy an id from the company list, and logout. Navigate to the login page and create a new user using the copied id. You can now login using the new account.
 
-THIS PART ONLY WORKS IF RUNNING ON AWS:
+THE FOLLOWING ONLY WORKS IF RUNNING ON AWS:
 
 Go to `Code management` and click create code. Enter a name and some code, example: [Example Parser Code](https://github.com/Jakan16/Log-Jolie-Cloud/blob/master/builder/test/example_jolie_parser.ol). 
 Known issue: The builder service is only authorized to access the kubernetes service for 15 min at a time, and must be restated after this time span. This can be done with `kubectl delete pods -l app=builder`. The deployment will automatically start the new pods.
