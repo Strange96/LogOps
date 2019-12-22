@@ -23,7 +23,7 @@ To get LogOps running on AWS, apply the Kubernetes files in the kubernetes/aws d
 10. Wait 10 seconds
 11. Use the url from step 2, and navigate your browser to it.
 
-To run LogOps on a local cluter, do the following with the files in the kubernetes/local directory:
+To run LogOps on a local cluster, do the following with the files in the kubernetes/local directory:
 
 1. run `kubectl apply -f deploy1.yml` and wait 30 seconds 
 2. run `kubectl apply -f deploy2.yml` and wait 30 seconds
