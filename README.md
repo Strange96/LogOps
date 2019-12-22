@@ -2,7 +2,7 @@
 Parent repository for LogOps, containing links to the repositories that contain the services which make up LogOps
 
 # Setup requirements
-Setting up the system requires a Kubernetes solution either supporting LoadBalancers (e.g. Amazon EKS), or a local Kubernetes setup (e.g. Kind (Kubernetes in Docker) https://github.com/kubernetes-sigs/kind)
+Setting up the system requires a Kubernetes solution either supporting LoadBalancers (e.g. Amazon EKS), or a local Kubernetes setup (e.g. Kind (Kubernetes in Docker) https://github.com/kubernetes-sigs/kind). Creating the cluster and getting all the services running consumes > 10 GBs of space alone, so make sure that enough space is available on your hard drive.
 
 To get the code of the entire system, clone this repository along the submodules with:
 
@@ -32,8 +32,10 @@ To run LogOps on a local cluster, do the following with the files in the kuberne
 
 When all deployments are ready, locally, the website will be available at `localhost:30077`. Run `kubectl get deployments` to see if the deployments are ready.
 
-If using Kubernetes in Docker, create the cluster with the config `port_forwarder.yml` in kubernetes/local/kind_config directory. E.g. from the kubernetes/local directory, run: 
-* `kind create cluster --config kind_config/port_forwarder.yml` 
+If using Kubernetes in Docker, create the cluster with the config `port-forwarder.yml` in kubernetes/local/kind_config directory. E.g. from the kubernetes/local directory, run: 
+* `kind create cluster --config kind_config/port-forwarder.yml`.
+
+If you're doing a remote setup of the local cluster, replace each occurrence of 'localhost' in deploy1.yml (in the kubernetes/local/ directory) with the remote ip.  
 
 To interact directly with the individual services, send requests to:
 * `ROOT` for the website
