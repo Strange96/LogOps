@@ -76,7 +76,7 @@ spec:
         - name: BUILDER_HOST
           value: builder-service:8005
         - name: AUTHENTICATOR_HOST
-          value: 192.168.1.10:30077
+          value: reverse-proxy-service:8092
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -189,15 +189,15 @@ spec:
         imagePullPolicy: Always
         env:
         - name: GLOBAL_URL
-          value: http://192.168.1.10:30077
+          value: http://localhost:30077
         - name: LOGSTORE_URL
-          value: http://192.168.1.10:30077
+          value: http://localhost:30077
         - name: ALARMSERVICE_URL
-          value: http://192.168.1.10:30077
+          value: http://localhost:30077
         - name: JOLIECLOUD_URL
-          value: http://192.168.1.10:30077
+          value: http://localhost:30077
         - name: AUTHSERVICE_URL
-          value: http://192.168.1.10:30077/auth
+          value: http://log-auth-service:7900
         - name: MYSQL_ADDR
           value: 127.0.0.1
       - name: mysql
@@ -263,7 +263,7 @@ spec:
         - name: LOGSTORE_HOST
           value: log-store-service:8080
         - name: AUTHENTICATOR_HOST
-          value: 192.168.1.10:30077
+          value: reverse-proxy-service:8092
         volumeMounts:
         - mountPath: /var/run/docker.sock
           name: dockersock

@@ -27,9 +27,10 @@ To run LogOps on a local cluter, do the following with the files in the kubernet
 
 1. run `kubectl apply -f deploy1.yml` and wait 10 seconds
 2. run `kubectl apply -f deploy2.yml` and wait 10 seconds
-3. run `kubectl apply -f services.yml`
+3. run `kubectl apply -f deploy_auth.yml`
+4. run `kubectl apply -f services.yml`
 
-Locally, the website will be available at `localhost:30077`. If using Kind (Kubernetes in Docker), the command `sudo kubectl port-forward svc/reverse-proxy-service 30077:8092` will have to be run.
+Locally, the website will be available at `localhost:30077`. If using Kind (Kubernetes in Docker), create the cluster with the config in kubernetes/local/kind_config directory. E.g. from the kubernetes/local directory, run: `kind create cluster --config kind_config/port_forwarder.yml` 
 
 To interact directly with the individual services, send requests to:
 * `ROOT` for the website
