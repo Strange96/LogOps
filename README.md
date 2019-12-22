@@ -54,9 +54,7 @@ Navigate to the login page in the upper-right corner. You can log in as an admin
 
 Navigate to admin control using the menu in the upper-right corner. Here a new company may be added under 'Add company'. Below under 'companies', save the company license of the company you created (to the right of the company name), and logout via the menu in the upper-right corner. Navigate to the login page again and create a new user using the company license. You can now login using the new account and open your dashboard via the menu in the upper-right corner.
 
-THE FOLLOWING ONLY APPLIES IF RUNNING ON AWS:
-
-Go to 'Code management' and click create code. Enter a name and some code, example: [Example Parser Code](https://github.com/Jakan16/Log-Jolie-Cloud/blob/master/builder/test/example_jolie_parser.ol). 
+If running on AWS, go to 'Code management' and click create code. Enter a name and some code, example: [Example Parser Code](https://github.com/Jakan16/Log-Jolie-Cloud/blob/master/builder/test/example_jolie_parser.ol). 
 Known issue: The builder service is only authorized to access the kubernetes service for 15 min at a time, and must be restated after this time span. This can be done with `kubectl delete pods -l app=builder`. The deployment will automatically start the new pods.
 
 If you're running LogOps locally, instead of the above which only applies to AWS, go to the 'Code management' menu on the left, click create code and provide a name. Locally, no code needs to supplied - this is explanied later on.
