@@ -57,7 +57,7 @@ Navigate to admin control using the menu in the upper-right corner. Here a new c
 If running on AWS, go to 'Code management' and click create code. Enter a name and some code, example: [Example Parser Code](https://github.com/Jakan16/Log-Jolie-Cloud/blob/master/builder/test/example_jolie_parser.ol). 
 Known issue: The builder service is only authorized to access the kubernetes service for 15 min at a time, and must be restated after this time span. This can be done with `kubectl delete pods -l app=builder`. The deployment will automatically start the new pods.
 
-If you're running LogOps locally, instead of the above which only applies to AWS, go to the 'Code management' menu on the left, click create code and provide a name. Locally, no code needs to supplied - this is explanied later on.
+If you're running LogOps locally, instead of the above which only applies to AWS, go to the 'Code management' menu on the left, click create code, provide a name and press create. Locally, no code needs to supplied - this is explanied later on.
 
 Navigate to Subscription in the left menu. Enter an agent name, click create and save the agent license key. Open a terminal and go to the Log-Agent/Files directory. Run the following command:
 
@@ -69,7 +69,7 @@ E.g. if running locally and the company id/license is 'abcd-1234', the agent lic
 
 `python3 Agent.py abcd-1234 xyz-42 http://localhost:30077/auth http://localhost:30077/getParserHost mycode`
 
-LogOps starts a new machine for a new parser/new code. As this is not possible locally, the local solution overwrites your code with a default log parser. This reads the content of the files in Log-Agent/Files directory and saves it as logs. If a file contains the text `alert:alert-name:severity-name` (replacing alert-name and severity-name with your own choice), the default log parser will raise the alarm through the alarm-service. 
+LogOps starts a new machine for a new parser/new code. As this is not possible locally, the local solution overwrites your code with a default log parser. This reads the content of the files in the Log-Agent/Files directory and saves it as logs. If a file contains the text `alert:alert-name:severity-name` (replacing alert-name and severity-name with your own choice), the default log parser will raise the alarm through the alarm-service. 
 
 The logs that are created and the alarms which are raised by parsing the logs, which are sent by the Agent, can be found on the website under the `Log management and Alarm management` menus. 
 * Click on the magnifying glass at right of an alarm to see which logs raised that alarm.
