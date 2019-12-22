@@ -51,7 +51,7 @@ Navigate to the login page in the upper-right corner. You can log in as an admin
 
 Navigate to admin control using the menu in the upper-right corner. Here a new company may be added under `Add company`. Copy an id from the company list, and logout. Navigate to the login page and create a new user using the copied id. You can now login using the new account.
 
-THE FOLLOWING ONLY WORKS IF RUNNING ON AWS:
+THE FOLLOWING ONLY APPLIES IF RUNNING ON AWS:
 
 Go to `Code management` and click create code. Enter a name and some code, example: [Example Parser Code](https://github.com/Jakan16/Log-Jolie-Cloud/blob/master/builder/test/example_jolie_parser.ol). 
 Known issue: The builder service is only authorized to access the kubernetes service for 15 min at a time, and must be restated after this time span. This can be done with `kubectl delete pods -l app=builder`. The deployment will automatically start the new pods.
@@ -62,7 +62,11 @@ Navigate to Subscription in the left menu. Enter an agent name and click create.
 
 `Name of log parser` is a name that you used for creating code.
 
-The command will start the Agent which will send the content of the files in the current working directory (that is Log-Agent/Files). 
+E.g. if running locally and the company id/license is 'abcd-1234', the agent license is 'xyz-42' and you named your code 'mycode', run:
+
+`python3 Agent.py abcd-1234 xyz-42 http://localhost:30077/auth http://localhost:30077/getParserHost mycode`
+
+The command will start the Agent which will send the content of the files in the current working directory (that is Log-Agent/Files).
 
 The logs that are created and the alarms which are raised by parsing the logs, which are sent by the Agent, can be found on the website under the `Log management and Alarm management` menus.
 
