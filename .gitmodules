@@ -16,3 +16,6 @@
 [submodule "Log-Website"]
 	path = Log-Website
 	url = https://github.com/Jakan16/Log-Website
+[submodule "Log-Proxy"]
+	path = Log-Proxy
+	url = https://github.com/Rhodez-x/Log-Proxy
